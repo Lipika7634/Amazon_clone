@@ -1,5 +1,6 @@
 import 'package:amazon_clone/Widgets/Box_UI.dart';
 import 'package:amazon_clone/Widgets/Button_UI.dart';
+import 'package:amazon_clone/Widgets/Product_Widget.dart';
 import 'package:amazon_clone/Widgets/app_bar.dart';
 import 'package:amazon_clone/main.dart';
 import 'package:amazon_clone/utilities/theme.dart';
@@ -21,17 +22,17 @@ class _Cart_after_SignInState extends State<Cart_after_SignIn> {
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.all(17),
+              margin: const EdgeInsets.all(17),
               child: Row(
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     radius: 50,
                     child: Image(image: NetworkImage('https://cdn-icons-png.flaticon.com/512/6046/6046042.png'),),
                   ),
-                  SizedBox(width: 10,),
+                  const SizedBox(width: 10,),
                   Column(
                     children: [
-                      Text('You Amazon cart is Empty', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),),
+                      const Text('You Amazon cart is Empty', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),),
                       link('Pick up where you left', false, () { })
                     ],
                   )
@@ -39,17 +40,17 @@ class _Cart_after_SignInState extends State<Cart_after_SignIn> {
               ),
             ),
             Container(
-              margin: EdgeInsets.symmetric(vertical: 10),
-              padding: EdgeInsets.symmetric(horizontal: 10),
+              margin: const EdgeInsets.symmetric(vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               height: 90,
               width: double.infinity,
               decoration: BoxDecoration(
                 color: peach.withOpacity(0.4),
-                border: Border(top: BorderSide(color: greycolor), bottom: BorderSide(color: greycolor)),
+                border: const Border(top: BorderSide(color: greycolor), bottom: BorderSide(color: greycolor)),
               ),
               child: Row(
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     radius: 28,
                     child: Image(image: NetworkImage('https://clipartcraft.com/images/amazon-logo-transparent-circle.png'), fit: BoxFit.contain,)),
                     SizedBox(width: 10,),
@@ -71,6 +72,11 @@ class _Cart_after_SignInState extends State<Cart_after_SignIn> {
               ),
             ),
             SizedBox(height: 25,),
+            ProductInCart(productName: "productName", cost: 45, discount: "discount", productUID: "productUID", sellerName: "sellerName", sellerUID: "sellerUID", rating: 3, noOfItems: 4),
+            ProductInCart(productName: "productName", cost: 45, discount: "discount", productUID: "productUID", sellerName: "sellerName", sellerUID: "sellerUID", rating: 3, noOfItems: 4),
+            ProductInCart(productName: "productName", cost: 45, discount: "discount", productUID: "productUID", sellerName: "sellerName", sellerUID: "sellerUID", rating: 3, noOfItems: 4),
+            ProductInCart(productName: "productName", cost: 45, discount: "discount", productUID: "productUID", sellerName: "sellerName", sellerUID: "sellerUID", rating: 3, noOfItems: 4),
+            ProductInCart(productName: "productName", cost: 45, discount: "discount", productUID: "productUID", sellerName: "sellerName", sellerUID: "sellerUID", rating: 3, noOfItems: 4),
             Divider(thickness: 20,),
             SizedBox(height: 25,),
             Container(

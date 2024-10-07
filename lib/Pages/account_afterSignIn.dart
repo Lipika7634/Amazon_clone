@@ -1,3 +1,4 @@
+import 'package:amazon_clone/Screens/sellScreen.dart';
 import 'package:amazon_clone/Widgets/Box_UI.dart';
 import 'package:amazon_clone/Widgets/Button_UI.dart';
 import 'package:amazon_clone/Widgets/app_bar.dart';
@@ -8,6 +9,9 @@ import 'package:amazon_clone/utilities/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:amazon_clone/Widgets/account_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+import 'package:amazon_clone/Model/userDetails.dart';
+import 'package:amazon_clone/Provider/userDetailsProvider.dart';
 
 class Account_afterSignIn extends StatefulWidget {
   const Account_afterSignIn({Key? key}) : super(key: key);
@@ -20,6 +24,7 @@ class Aaccount_afterSignInState extends State<Account_afterSignIn> {
   FirebaseAuth auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
+  UserDetailsModel userDetails = Provider.of<UserDetailsProvider>(context).userDetails;
     Size size = getScreenSize();
     return Scaffold(
       appBar: account_app_bar(),
@@ -37,7 +42,7 @@ class Aaccount_afterSignInState extends State<Account_afterSignIn> {
                     child: Icon(Icons.person_outline, color: Colors.white,),
                   ),
                   SizedBox(width: 2,),
-                  Text(' Hello, ▼', style: TextStyle(fontSize: 18, color: Colors.black),),
+                  Text(' Hello, ${userDetails.name} ▼', style: TextStyle(fontSize: 18, color: Colors.black),),
                 ],
               ),
             ),
@@ -113,6 +118,13 @@ class Aaccount_afterSignInState extends State<Account_afterSignIn> {
             ),
             Divider(thickness: 10,),
             SizedBox(height: 30,),
+            Row(
+              children: [
+                Expanded(child: rounded_button('Sell', () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => SellScreen(),));
+                }))
+              ],
+            ),
             Row(
               children: [
                 Expanded(

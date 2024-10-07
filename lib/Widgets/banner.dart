@@ -142,7 +142,7 @@ Widget Products(List<String> list, int offer) {
                   },
                   child: Container(
                     margin: EdgeInsets.all(8.0),
-                    width: 150, // Adjust width as necessary for images
+                    width: 150, 
                     child: Image.network(
                       list[index],
                       fit: BoxFit.contain,

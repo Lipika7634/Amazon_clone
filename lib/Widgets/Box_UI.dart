@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-Widget Text_Boxes(bool hide, TextEditingController controller){
+Widget Text_Boxes(TextEditingController controller, TextInputType type){
   return Container(
     margin: EdgeInsets.all(10),
     child: Column(
       children: [
         TextFormField(
+          keyboardType: type,
           validator: (value) {
             if (value.toString().isEmpty) {
               return 'Entry should not be Empty';
@@ -20,7 +21,6 @@ Widget Text_Boxes(bool hide, TextEditingController controller){
             focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(5),), 
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(5))
           ),
-          obscureText: hide,
         ),
       ],
     ),
@@ -66,52 +66,63 @@ class Box_Container extends StatefulWidget {
 class _Box_ContainerState extends State<Box_Container> {
   @override
   Widget build(BuildContext context) {
-    return Stack(
-    alignment: Alignment.center,
-    children: [
-      Positioned(
-        top: 100,
-        child: Container(
-          height: 330,
-          width: 330,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Color.fromARGB(255, 114, 225, 240).withOpacity(0.4),
-          ),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black45.withOpacity(0.6)),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Positioned(
+              top: 100,
+              child: Container(
+                height: 330,
+                width: 330,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color.fromARGB(255, 114, 225, 240).withOpacity(0.4),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 0, left: 0, right: 0, top: 0,
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black45.withOpacity(0.6)),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: ElevatedButton(
+                  onPressed: widget.action,
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(Colors.transparent),
+                    elevation: MaterialStatePropertyAll(0),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(widget.text, style: TextStyle(color: Colors.black)),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Image(
+                          image: NetworkImage(widget.imageUrl),
+                          height: 150,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
-      Positioned(
-        bottom: 0,left: 0,right: 0,top: 0,
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black45.withOpacity(0.6)),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: ElevatedButton(
-            onPressed: (){
-              widget.action();
-            },
-            style: ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll(Colors.transparent),
-              elevation: MaterialStatePropertyAll(0),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(widget.text, style: TextStyle(color: Colors.black),),
-                Align(alignment: Alignment.bottomCenter,
-                child: Image(image: NetworkImage(widget.imageUrl), height: 150,),),
-              ],
-            ),
-          ),
-        ),
-      ),
-    ],
-  );
+    );
   }
 }
-
 
 Widget services(String text, VoidCallback action){
   return Container(

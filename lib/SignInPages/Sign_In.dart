@@ -73,10 +73,10 @@ class _SignInState extends State<SignIn> {
                     style: Theme.of(context).textTheme.headline6,
                   ),
                   SizedBox(height: 15),
-                  Text('Enter mobile number or email'),
+                  Text('Enter e-mail address'),
                   Form(
                     key: _formKey,
-                    child: Text_Boxes(false, controller),
+                    child: Text_Boxes(controller, TextInputType.emailAddress),
                   ),
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 5),

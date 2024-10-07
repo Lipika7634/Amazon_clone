@@ -1,3 +1,4 @@
+import 'package:amazon_clone/utilities/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:amazon_clone/utilities/theme.dart';
 
@@ -53,5 +54,20 @@ Widget line(BuildContext context){
     color: Colors.grey.shade600,
     height: 1,
     width: MediaQuery.of(context).size.width,
+  );
+}
+
+Widget button2(String text, Color color, VoidCallback action){
+  return Container(
+    padding: EdgeInsets.symmetric(vertical: 8),
+    height: 75,
+    width: getScreenSize().width*0.85,
+    child: ElevatedButton(
+      onPressed: () {
+        action();
+      }, 
+      child: Text("$text", style: TextStyle(color: Colors.black),),
+      style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(color),elevation: MaterialStatePropertyAll(4), shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)))),
+    ),
   );
 }

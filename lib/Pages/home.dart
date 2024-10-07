@@ -107,7 +107,7 @@ class _homeState extends State<home> {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => ResultScreen(query: ''),));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => ResultScreen(query: adItemNames[index]),));
                         },
                         child: smallBanner(index)
                       );

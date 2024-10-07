@@ -6,6 +6,8 @@ import 'Pages/cart.dart';
 import 'Pages/items.dart';
 import 'Pages/account.dart';
 import 'package:amazon_clone/utilities/theme.dart';
+import 'package:provider/provider.dart';
+import 'Provider/userDetailsProvider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,11 +20,23 @@ void main() async {
   ):
   await Firebase.initializeApp();
   runApp(
-    MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MainPage(),
-    )
+    HomePage(),
   );
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => UserDetailsProvider())],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: MainPage(),
+      ),
+    );
+  }
 }
 
 class MainPage extends StatefulWidget {
@@ -43,6 +57,7 @@ class _MainPageState extends State<MainPage> {
   }
   @override
   Widget build(BuildContext context) {
+    Provider.of<UserDetailsProvider>(context).getData();
     return DefaultTabController(
       length: 4,
       child: Scaffold(

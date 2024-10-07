@@ -45,7 +45,7 @@ class _SignInPasswordState extends State<SignInPassword> {
                 link('Change', false, (){Navigator.pop(context);}),
               ],
             ),
-            Text_Boxes(hide, password),
+            password_form(hide, password),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

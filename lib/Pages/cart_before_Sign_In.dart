@@ -24,8 +24,9 @@ class _cartState extends State<Cart_before_Sign_In> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             CircleAvatar(
-              child: Image(image: NetworkImage('https://cdn-icons-png.flaticon.com/512/6046/6046042.png'), fit: BoxFit.cover, height: 200,),
-              minRadius: 100,
+              child: Image.network('https://cdn-icons-png.flaticon.com/512/6046/6046042.png',
+               fit: BoxFit.cover, height: 200,
+               ),minRadius: 100,
             ),
             Text('Your Amazon Cart is empty', style: Theme.of(context).textTheme.headline6,),
             link('Shop today\'s deals', false, () { }),

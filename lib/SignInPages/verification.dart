@@ -107,7 +107,7 @@ class _verificationState extends State<verification> {
                           SizedBox(height: 10),
                           Text('First and last name'),
                           SizedBox(height: 5),
-                          Text_Boxes(false, name),
+                          Text_Boxes(name, TextInputType.name),
                           SizedBox(height: 10),
                           Text('Password'),
                           SizedBox(height: 5),

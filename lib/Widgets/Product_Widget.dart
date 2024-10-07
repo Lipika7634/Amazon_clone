@@ -1,6 +1,7 @@
 import 'dart:ui';
-
+import 'package:amazon_clone/Screens/Results.dart';
 import 'package:amazon_clone/Widgets/Button_UI.dart';
+import 'package:amazon_clone/utilities/constant.dart';
 import 'package:amazon_clone/utilities/theme.dart';
 import 'package:amazon_clone/utilities/utility.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +61,7 @@ class ProductInCart extends StatefulWidget {
   final sellerName;
   final sellerUID;
   final rating;
-  final noOfRating;
+  final noOfItems;
   const ProductInCart({
     Key? key,
     required this.productName,
@@ -70,7 +71,7 @@ class ProductInCart extends StatefulWidget {
     required this.sellerName,
     required this.sellerUID,
     required this.rating,
-    required this.noOfRating,
+    required this.noOfItems,
   }) : super(key: key);
 
   @override
@@ -105,127 +106,132 @@ class _ProductInCartState extends State<ProductInCart> {
     final rs = widget.cost;
     return idx <= 0
         ? Container()
-        : Container(
-              margin: EdgeInsets.all(10),
-              padding: EdgeInsets.symmetric(horizontal: 5),
-              width: size.width,
-              height: size.height / 2,
-              decoration: BoxDecoration(
-                color: Colors.blue.shade100.withOpacity(0.15),
-                borderRadius: BorderRadius.circular(10),
+        : GestureDetector(
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ResultScreen(query: widget.productName),));
+          },
+          child: Container(
+                margin: EdgeInsets.all(10),
+                padding: EdgeInsets.symmetric(horizontal: 5),
+                width: size.width,
+                height: size.height / 2,
+                decoration: BoxDecoration(
+                  color: Colors.blue.shade100.withOpacity(0.15),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: 
+                // Column(
+                //   children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: TextButton(
+                                  onPressed: () {
+                                    toggle();
+                                  },
+                                  child: check
+                                      ? const Icon(
+                                          Icons.check_box,
+                                          color: cyanColor,
+                                        )
+                                      : const Icon(
+                                          Icons.check_box_outline_blank,
+                                          color: Colors.black,
+                                        ),
+                                ),
+                              ),
+                              Image(
+                                image: NetworkImage('https://eapi.supplyhog.com/file-srv/img/i_ab712d31a3adae6586af4e3c38e7e60e.jpg'),
+                                height: size.height / 4,
+                                width: size.width / 3,
+                                fit: BoxFit.contain,
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 10),
+                                child: Row(
+                                  children: [
+                                    smallSquareBox(idx<=1 ? Icon(Icons.delete_outline) : Text('-') , () {decrease();}),
+                                    smallSquareBox(Text('$idx'), () {}),
+                                    smallSquareBox(Icon(Icons.add), () {increase();})
+                                  ],
+                                ),
+                              ),
+                              Align(alignment: Alignment.bottomCenter, child: more_option('See more like this', () { }))
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 70,
+                                child: Expanded(
+                                  child: Text(
+                                    '${widget.productName}',
+                                    style: TextStyle(fontSize: 15),
+                                    softWrap: true,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 3,
+                                  ),
+                                ),
+                              ),
+                              rating(widget.rating),
+                              Row(
+                                children: [
+                                  Text(
+                                    "₹",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontFeatures: [FontFeature.superscripts()]),
+                                  ),
+                                  Text('${rs.toInt()}',style: TextStyle(fontSize: 25),),
+                                  Text(
+                                    (rs - rs.toInt()).toString(),
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontFeatures: [FontFeature.superscripts()]),
+                                  ),
+                                ],
+                              ),
+                              Expanded(
+                                  child: RichText(
+                                    text: TextSpan(children: [
+                                      TextSpan(text: 'Sold by ', style: TextStyle(color: Colors.black, fontSize: 20)),
+                                      TextSpan(text: '${widget.sellerName}', style: TextStyle(color: Colors.blue, fontSize: 20)),
+                                    ]),
+                                  ),
+                                ),
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    more_option('Delete', () {
+                                      setState(() {
+                                        idx = 0;
+                                      });
+                                    }),
+                                    more_option('Save for later', () {})
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    // more_option('See more like this', () {})
+                //   ],
+                // ),
               ),
-              child: 
-              // Column(
-              //   children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Align(
-                              alignment: Alignment.topLeft,
-                              child: TextButton(
-                                onPressed: () {
-                                  toggle();
-                                },
-                                child: check
-                                    ? const Icon(
-                                        Icons.check_box,
-                                        color: cyanColor,
-                                      )
-                                    : const Icon(
-                                        Icons.check_box_outline_blank,
-                                        color: Colors.black,
-                                      ),
-                              ),
-                            ),
-                            Image(
-                              image: NetworkImage('https://eapi.supplyhog.com/file-srv/img/i_ab712d31a3adae6586af4e3c38e7e60e.jpg'),
-                              height: size.height / 4,
-                              width: size.width / 3,
-                              fit: BoxFit.contain,
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(left: 10),
-                              child: Row(
-                                children: [
-                                  smallSquareBox(idx<=1 ? Icon(Icons.delete_outline) : Text('-') , () {decrease();}),
-                                  smallSquareBox(Text('$idx'), () {}),
-                                  smallSquareBox(Icon(Icons.add), () {increase();})
-                                ],
-                              ),
-                            ),
-                            Align(alignment: Alignment.bottomCenter, child: more_option('See more like this', () { }))
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Column(
-                          children: [
-                            Container(
-                              height: 70,
-                              child: Expanded(
-                                child: Text(
-                                  '${widget.productName}',
-                                  style: TextStyle(fontSize: 15),
-                                  softWrap: true,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 3,
-                                ),
-                              ),
-                            ),
-                            rating(widget.rating),
-                            Row(
-                              children: [
-                                Text(
-                                  "₹",
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontFeatures: [FontFeature.superscripts()]),
-                                ),
-                                Text('${rs.toInt()}',style: TextStyle(fontSize: 25),),
-                                Text(
-                                  (rs - rs.toInt()).toString(),
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontFeatures: [FontFeature.superscripts()]),
-                                ),
-                              ],
-                            ),
-                            Expanded(
-                                child: RichText(
-                                  text: TextSpan(children: [
-                                    TextSpan(text: 'Sold by ', style: TextStyle(color: Colors.black, fontSize: 20)),
-                                    TextSpan(text: '${widget.sellerName}', style: TextStyle(color: Colors.blue, fontSize: 20)),
-                                  ]),
-                                ),
-                              ),
-                            Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  more_option('Delete', () {
-                                    setState(() {
-                                      idx = 0;
-                                    });
-                                  }),
-                                  more_option('Save for later', () {})
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  // more_option('See more like this', () {})
-              //   ],
-              // ),
-            );
+        );
   }
 }
 
@@ -259,9 +265,10 @@ class _ProductInResultWidgetState extends State<ProductInResultWidget> {
   @override
   Widget build(BuildContext context) {
     final rs = widget.cost;
-    Size size = MediaQuery.of(context).size;  // Use MediaQuery to get the screen size
+    Size size = MediaQuery.of(context).size;
 
     return Container(
+      color: bgcolor,
       height: size.height / 2.2,
       width: size.width - 5,
       child: Row(
@@ -269,9 +276,9 @@ class _ProductInResultWidgetState extends State<ProductInResultWidget> {
           Expanded(
             flex: 2,
             child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 5),
               height: size.height / 2.2,
               width: double.infinity,
-              color: bgcolor,
               child: Image(
                 image: NetworkImage('https://eapi.supplyhog.com/file-srv/img/i_ab712d31a3adae6586af4e3c38e7e60e.jpg'),
                 fit: BoxFit.contain,
@@ -281,16 +288,13 @@ class _ProductInResultWidgetState extends State<ProductInResultWidget> {
           Expanded(
             flex: 3,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start, // Align children to the start
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    '${widget.productName}',
-                    style: TextStyle(fontSize: 18),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                Text(
+                  '${widget.productName}',
+                  style: TextStyle(fontSize: 18),
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 rating(widget.rating),
                 Row(
@@ -307,7 +311,7 @@ class _ProductInResultWidgetState extends State<ProductInResultWidget> {
                       style: TextStyle(fontSize: 25),
                     ),
                     Text(
-                      (rs - rs.toInt()).toString(),
+                      ("·"+((rs - rs.toInt())*100).toString()),
                       style: TextStyle(
                         fontSize: 15,
                         fontFeatures: [FontFeature.superscripts()],
@@ -327,18 +331,102 @@ class _ProductInResultWidgetState extends State<ProductInResultWidget> {
                   ),
                 ),
                 Expanded(child: Container()),
-                Row(
-                  children: [
-                    Expanded(
-                      child: rounded_button('Add to cart', () {}),
-                    ),
-                  ],
+                Container(
+                  padding: EdgeInsets.only(bottom: 10),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: rounded_button('Add to cart', () {}),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+}
+
+Widget reviewSection(String costumer, int rate, String review){
+  return Container(
+    height: 88,
+    padding: EdgeInsets.symmetric(vertical: 10),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text('$costumer', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            rating(rate),
+            Text(keysOfRating[rate-1],),
+          ],
+        ),
+        Text('$review'),
+      ],
+    ),
+  );
+}
+
+class reviewDialogBox extends StatefulWidget {
+  const reviewDialogBox({Key? key}) : super(key: key);
+
+  @override
+  State<reviewDialogBox> createState() => _reviewDialogBoxState();
+}
+
+class _reviewDialogBoxState extends State<reviewDialogBox> {
+  int _rate = -1;
+  @override
+  Widget build(BuildContext context) {
+    TextEditingController controller = TextEditingController();
+    return AlertDialog(
+      actions: [
+        Container(
+          height: 200,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text('Write a review for this product!', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(5, (index) {
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _rate = index;
+                      });
+                    },
+                    child: Icon(
+                      (index <= _rate) ? Icons.star : Icons.star_outline,
+                      color: Colors.amber[800],
+                    ),
+                  );
+                }),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      controller: controller,
+                      decoration: InputDecoration(
+                        hintText: 'Type your review'
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Center(child: TextButton(onPressed: (){
+                Navigator.pop(context);
+              }, child: Text('Send'))),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
